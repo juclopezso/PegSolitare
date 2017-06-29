@@ -1,0 +1,6 @@
+projectKey=PegSolitareF
+serverUrl=http://localhost:9000
+serverVersion=6.4.0.25310
+dashboardUrl=http://localhost:9000/dashboard/index/PegSolitareF
+ceTaskId=AVz14Yht-qVIfWV4eJMm
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVz14Yht-qVIfWV4eJMm
