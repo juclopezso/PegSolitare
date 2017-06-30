@@ -31,7 +31,7 @@ public class Board {
     	gameGrid[2][4].setOwner(Symbol.X);
     }
     
-    public void cruzLong(){
+    public void cruzL(){
     	gameGrid[0][3].setOwner(Symbol.X);
     	gameGrid[1][3].setOwner(Symbol.X);
     	gameGrid[2][3].setOwner(Symbol.X);

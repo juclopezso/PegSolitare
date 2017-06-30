@@ -5,10 +5,7 @@ import model.Field.Symbol;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,13 +13,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class View extends JFrame implements ViewInterface {
-    private final GridLayout grid;     // default grid-size for tic-tac-toe
-    private final JButton[] buttons;   // an array containing the 9 buttons
+    private final GridLayout grid;     
+    private final JButton[] buttons;   
 	private ImageIcon none;
-
+	
     public View() {
-        super("tic-tac-toe");
-        grid = new GridLayout(7, 7);
+        super("Peg Solitare");
+        grid = new GridLayout(8, 7);
         buttons = new JButton[49];
         
 		none = new ImageIcon(this.getClass().getResource("none.png"));
@@ -52,18 +49,18 @@ public class View extends JFrame implements ViewInterface {
     }
 
     @Override
-
     public void updateBoard(Symbol userSymbol, JButton button) {    
-    	for(int i=0; i<49; i++){
-    		
-    	try {
-            Image icon = ImageIO.read(View.class.getResource("icons/" + userSymbol.toString() + ".png"));
-            button.setIcon(new ImageIcon(icon));
-        } catch (IOException ex) {
-            System.out.println("icons/" + userSymbol.toString() + ".png not found.");
-        }
-    	}
-    }
+    		ImageIcon fill;
+    		ImageIcon noFill; 
+    		fill = new ImageIcon(this.getClass().getResource("icons/X.png"));
+    		noFill = new ImageIcon(this.getClass().getResource("icons/O.png"));
+    		none = new ImageIcon(this.getClass().getResource("icons/none.png"));
+    	
+    		if(userSymbol.equals(Symbol.X)) button.setIcon(fill);
+    		if(userSymbol.equals(Symbol.O)) button.setIcon(noFill);
+    		if(userSymbol.equals(Symbol.NONE)) button.setIcon(none);
+    	
+    }  
     
     @Override
     public void informWin(Symbol userSymbol) {

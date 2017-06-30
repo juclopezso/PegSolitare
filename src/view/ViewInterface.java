@@ -12,7 +12,6 @@ public interface ViewInterface
      * @param symbol    the symbol of the current player.
      * @param button    the button that was clicked.
      */
-    public void updateBoard(Symbol owner, JButton button);
     
     /**
      * Informs the user who won.
@@ -25,4 +24,9 @@ public interface ViewInterface
      * Informs the user of the tie.
      */
     public void informTie();
+
+	void updateBoard(Symbol userSymbol, JButton button);
+
+
+
 }

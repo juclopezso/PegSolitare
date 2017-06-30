@@ -69,10 +69,11 @@ public class Game {
         return board.getFieldAccessible(x, y);
     }
     
-    public void setUserSymbol() {
-    	if (userSymbol.equals(Symbol.X)) userSymbol = Symbol.O;
-    	else userSymbol = Symbol.X;
-        }
+    public void setUserSymbol(int i, int j) {
+    	if(getFieldOwner(i, j).equals(Symbol.O))
+    		userSymbol = Symbol.X;
+        else userSymbol = Symbol.O;
+    }
     
     public Symbol getUserSymbol() {
         return userSymbol;
