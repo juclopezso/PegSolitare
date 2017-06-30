@@ -10,7 +10,7 @@ public class Field {
     }
 
     public static Field getDefault() {
-        return new Field(Symbol.X);
+        return new Field(Symbol.O);
     }
 
     public Symbol getOwner() {
@@ -21,11 +21,11 @@ public class Field {
         this.owner = owner;
     }
     
-    public boolean getAccesible() {
+    public boolean getAccessible() {
         return accesible;
     }
 
-    public void setAcessible(boolean accesible) {
+    public void setAccessible(boolean accesible) {
         this.accesible = accesible;
     }
     @Override

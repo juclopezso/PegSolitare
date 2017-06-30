@@ -5,30 +5,18 @@ import model.Field.Symbol;
 //Logica del juego
 public class Game {
     private Board board;
-    
-    //private int turnsCounter;
     private Symbol userSymbol;
     private boolean didSomeoneWin; 
     
     public Game() {
         board = new Board();
-        
-        //turnsCounter = 0;
+        board.cruz();
         userSymbol = Symbol.NONE;
         didSomeoneWin = false;
     }
-
-    public void setFieldOwner(Symbol userSymbol, int x, int y) {
-        board.setFieldOwner(userSymbol, x, y);
-    }
-
-    //Solo para imprimir en consola
-    public Symbol getFieldOwner(int x, int y) {
-        return board.getFieldOwner(x, y);
-    }
-    //Imprime en cosola
+    
+    //Print the field Symbol
     public void printField() {
-        System.out.println("---PRINTING FIELD---");
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
                 System.out.print(getFieldOwner(i, j) + " ");
@@ -36,10 +24,26 @@ public class Game {
             System.out.println();
         }
     }
-    //Evalua si el juego ya temina
+    
+    public void printAccess() {
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                System.out.print(getFieldAccessible(i, j) + " ");
+            }
+            System.out.println();
+        }
+    }
+    //Condition to finish the game
+    public boolean getDidSomeoneWin() {
+        return didSomeoneWin;
+    }
+    
+    //Condition to game´s end
     public boolean isGameOver() {
         int score = board.evaluateBoard();
+        printAccess();
         printField();
+        
         
         if(score == 1){
         	didSomeoneWin = true;
@@ -47,19 +51,23 @@ public class Game {
         }else return false;
     }
     
-    /*public void incrementTurnsCounter() {
-        turnsCounter++;
+    //Set symbol of that field
+    public void setFieldOwner(Symbol userSymbol, int x, int y) {
+        board.setFieldOwner(userSymbol, x, y);
+    }
+
+    //Get Symbol of that field
+    public Symbol getFieldOwner(int x, int y) {
+        return board.getFieldOwner(x, y);
     }
     
-        public int getTurnsCounter() {
-        return turnsCounter;
+    public void setFieldAccessible(boolean access, int x, int y){
+    	board.setFieldAccessible(access, x, y);
     }
     
-       	public void incTurnCounterAndSetUserSymbol() {
-        setUserSymbol();
+    public boolean getFieldAccessible(int x, int y) {
+        return board.getFieldAccessible(x, y);
     }
-    */
-   
     
     public void setUserSymbol() {
     	if (userSymbol.equals(Symbol.X)) userSymbol = Symbol.O;
@@ -69,8 +77,5 @@ public class Game {
     public Symbol getUserSymbol() {
         return userSymbol;
     }
-    
-    public boolean getDidSomeoneWin() {
-        return didSomeoneWin;
-    }
+  
 }

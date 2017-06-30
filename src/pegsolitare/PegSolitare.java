@@ -8,7 +8,7 @@ public class PegSolitare {
 
         while (!controller.isGameOver()) {
             try {
-                Thread.sleep(250);
+                Thread.sleep(200);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }

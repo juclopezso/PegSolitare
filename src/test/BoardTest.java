@@ -15,6 +15,19 @@ public class BoardTest {
 		
 			assertEquals(0, score);
 	}
+	@Test
+	public void boardAccess(){
+		Board board = new Board();
+		int access=0;
+		
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if(board.getFieldAccessible(i, j)==true)
+					access++;
+            }
+        }
+		assertEquals(0, access);
+	}
 	
 	@Test
 	public void winningBoard(){

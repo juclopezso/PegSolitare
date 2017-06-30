@@ -32,13 +32,8 @@ public class View extends JFrame implements ViewInterface {
         pack();
         setVisible(true);
 
-        getRootPane().setDefaultButton(buttons[4]);
-        buttons[4].requestFocus();
     }
 
-    /**
-     * Adds the panel along with its buttons to the pane.
-     */
     public void addComponentsToPane(final Container pane) {
         final JPanel panel = new JPanel();
         panel.setLayout(grid);        
@@ -57,66 +52,37 @@ public class View extends JFrame implements ViewInterface {
     }
 
     @Override
-    /**
-     * Changes a field to a user symbol.
-     * 
-     * @param symbol    the symbol of the current player.
-     * @param button    the button that was clicked.
-     */
+
     public void updateBoard(Symbol userSymbol, JButton button) {    
     	for(int i=0; i<49; i++){
     		
     	try {
             Image icon = ImageIO.read(View.class.getResource("icons/" + userSymbol.toString() + ".png"));
             button.setIcon(new ImageIcon(icon));
-            //button.setEnabled(false);
         } catch (IOException ex) {
             System.out.println("icons/" + userSymbol.toString() + ".png not found.");
         }
     	}
     }
     
-    public void fillButtons(){
-    	for(int i=0; i<49; i++){
-    	}
-    }
-
-    /**
-     * Informs the user who won.
-     * 
-     * @param symbol    the symbol of the current player (=> winner).
-     */
     @Override
     public void informWin(Symbol userSymbol) {
         for (JButton button : buttons) {
             button.setEnabled(false);
         }
 
-        JOptionPane.showMessageDialog(null, "Player " + userSymbol.toString() + " has won!");
+        JOptionPane.showMessageDialog(null,"You won!");
     }
 
-    /**
-     * Informs the user of the tie.
-     */
     @Override
     public void informTie() {
-        JOptionPane.showMessageDialog(null, "Tie!");
+        JOptionPane.showMessageDialog(null, "Restart");
     }
 
-    /**
-     * Returns a button with a specific index.
-     * 
-     * @return a button with a specific index.
-     */
     public JButton getButton(int index) {
         return buttons[index];
     }
 
-    /**
-     * Returns the size of the buttons[] array.
-     * 
-     * @return the size of the buttons[] array.
-     */
     public int getNumberOfButtons() {
         return buttons.length;
     }
