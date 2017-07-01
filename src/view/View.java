@@ -38,12 +38,14 @@ public class View extends JFrame implements ViewInterface {
 
         for(int y=0; y<7 ;y++){
 			for(int x=0; x<7 ; x++){
+
 	            buttons[x][y] = new JButton();
 	            buttons[x][y].getPreferredSize();
 	            panel.add(buttons[x][y]);
 	            buttons[x][y].setIcon(none);
 	            if(x<2){
 					if(y<2||y>4){
+						
 						buttons[x][y].setEnabled(false);
 					} 	
 				}
@@ -52,7 +54,7 @@ public class View extends JFrame implements ViewInterface {
 						buttons[x][y].setEnabled(false);
 					} 	
 				}	
-	            
+				
 			}	
         }
 

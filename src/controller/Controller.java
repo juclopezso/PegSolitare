@@ -112,7 +112,7 @@ public class Controller implements ActionListener {
         int butIndY = 0;
         for(int y=0; y<7 ;y++){
 			for(int x=0; x<7 ; x++) {
-            if (button == ((View)view).getButton(x,y)) {
+            if (button == view.getButton(x,y)) {
                 butIndX = x;
                 butIndY = y;
                 }
