@@ -78,5 +78,7 @@ public class Game {
     public Symbol getUserSymbol() {
         return userSymbol;
     }
-  
+    public Board getBoard(){
+    	return this.board;
+    }
 }

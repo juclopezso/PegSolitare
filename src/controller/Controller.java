@@ -17,15 +17,24 @@ public class Controller implements ActionListener {
     private View view;
     private int click = 1;
     private int[] coordinate  = new int[2];
-    private int[] coordinate2 = new int[2] ;
+    private int[] coordinate2 = new int[2];
     
     public Controller() {
         this.game = new Game();
         this.view = new View();
         addActionListeners();
+        setUp();
+        
         
     }
-
+    public void setUp(){
+    	for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++) {
+				view.updateBoard(game.getBoard().getFieldOwner(x, y),view.getButton(x, y));
+			}
+		}
+    }
+    
     private void addActionListeners() {
     	for(int y=0; y<7 ;y++){
 			for(int x=0; x<7 ; x++){
@@ -133,6 +142,14 @@ public class Controller implements ActionListener {
     }
 
     public boolean isGameOver() {    	
-        return game.isGameOver();
+        return game.isGameOver();//los prints de los tableros
+    }
+    public View getView(){
+    	
+    	return this.view;
+    }
+    public Game getGame(){
+    	
+    	return this.game;
     }
 }

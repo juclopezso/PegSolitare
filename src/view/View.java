@@ -45,7 +45,6 @@ public class View extends JFrame implements ViewInterface {
 	            buttons[x][y].setIcon(none);
 	            if(x<2){
 					if(y<2||y>4){
-						
 						buttons[x][y].setEnabled(false);
 					} 	
 				}
