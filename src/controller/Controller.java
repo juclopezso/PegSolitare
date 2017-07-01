@@ -13,7 +13,8 @@ import javax.swing.JButton;
 
 public class Controller implements ActionListener {
     private Game game;
-    private ViewInterface view;
+    //private ViewInterface view;
+    private View view;
     private int click = 1;
     private int[] coordinate  = new int[2];
     private int[] coordinate2 = new int[2] ;
@@ -22,55 +23,56 @@ public class Controller implements ActionListener {
         this.game = new Game();
         this.view = new View();
         addActionListeners();
+        
     }
 
     private void addActionListeners() {
     	for(int y=0; y<7 ;y++){
 			for(int x=0; x<7 ; x++){
-            ((View)view).getButton(x,y).addActionListener(this);
+				view.getButton(x,y).addActionListener(this);
 			}
 		}
     }
     
-    public boolean canMoveRigth(Game game, int i, int j){
-		return(i<5 && game.getFieldOwner(i+1, j).equals(Symbol.X) && game.getFieldOwner(i+2, j).equals(Symbol.O)) ? true : false;
+    public boolean canMoveRigth(Game game, int x, int y){
+		return(x<5 && game.getFieldOwner(x+1, y).equals(Symbol.X) && game.getFieldOwner(x+2, y).equals(Symbol.O)) ? true : false;
 	}
-    public boolean canMoveLeft(Game game, int i, int j){
-		return(i>1 && game.getFieldOwner(i-1, j).equals(Symbol.X) && game.getFieldOwner(i-2, j).equals(Symbol.O)) ? true : false;
+    public boolean canMoveLeft(Game game, int x, int y){
+		return(x>1 && game.getFieldOwner(x-1, y).equals(Symbol.X) && game.getFieldOwner(x-2, y).equals(Symbol.O)) ? true : false;
 	}
-    public boolean canMoveUp(Game game, int i, int j){
-		return(j>1 && game.getFieldOwner(i, j-1).equals(Symbol.X) && game.getFieldOwner(i, j-2).equals(Symbol.O)) ? true : false;
+    public boolean canMoveUp(Game game, int x, int y){
+		return(y>1 && game.getFieldOwner(x, y-1).equals(Symbol.X) && game.getFieldOwner(x, y-2).equals(Symbol.O)) ? true : false;
 	}
-    public boolean canMoveDown(Game game, int i, int j){
-		return(i<5 && game.getFieldOwner(i, j+1).equals(Symbol.X) && game.getFieldOwner(1, j+2).equals(Symbol.O)) ? true : false;
-	}
-    
-	public void setFieldFalse(Game game, int i, int j){
-		if(i<5) game.setFieldAccessible(false, i+2, j);
-    	if(i>1) game.setFieldAccessible(false, i-2, j);
-    	if(j>1) game.setFieldAccessible(false, i, j-2);
-    	if(j<5) game.setFieldAccessible(false, i, j+2);	
+    public boolean canMoveDown(Game game, int x, int y){
+		return(x<5 && game.getFieldOwner(x, y+1).equals(Symbol.X) && game.getFieldOwner(1, y+2).equals(Symbol.O)) ? true : false;
 	}
     
-	public void setFieldSymbolO(Game game, int i1, int j1, int i2, int j2){
-		if(i2 > i1) game.setFieldOwner(Symbol.O, i1+1, j1);
-    	if(i2 < i1) game.setFieldOwner(Symbol.O, i1-1, j1);
-    	if(j2 < j1) game.setFieldOwner(Symbol.O, i1, j1-1);            		              
-    	if(j2 > j1) game.setFieldOwner(Symbol.O, i1, j1+1);
+	public void setFieldFalse(Game game, int x, int y){
+		if(x<5) game.setFieldAccessible(false, x+2, y);
+    	if(x>1) game.setFieldAccessible(false, x-2, y);
+    	if(y>1) game.setFieldAccessible(false, x, y-2);
+    	if(y<5) game.setFieldAccessible(false, x, y+2);	
+	}
+    
+	public void setFieldSymbolO(Game game, int x1, int y1, int x2, int y2){
+		if(x2 > x1) game.setFieldOwner(Symbol.O, x1+1, y1);
+    	if(x2 < x1) game.setFieldOwner(Symbol.O, x1-1, y1);
+    	if(y2 < y1) game.setFieldOwner(Symbol.O, x1, y1-1);            		              
+    	if(y2 > y1) game.setFieldOwner(Symbol.O, x1, y1+1);
 	}
 	
 	
-	public void setFieldClicked(Game game, int i1, int j1, int i2, int j2){
-		game.setFieldAccessible(false, i1, j1);
-    	game.setFieldOwner(Symbol.O, i1, j1);
-    	game.setFieldOwner(Symbol.X, i2, j2);
+	public void setFieldClicked(Game game, int x1, int y1, int x2, int y2){
+		game.setFieldAccessible(false, x1, y1);
+    	game.setFieldOwner(Symbol.O, x1, y1);
+    	game.setFieldOwner(Symbol.X, x2, y2);
 	}
 	
-	public void setAvailableMoves(Game game, int i, int j){
-		if(canMoveRigth(game, i, j)) game.setFieldAccessible(true, i+2, j);
-        if(canMoveUp(game, i, j)) game.setFieldAccessible(true, i, j-2);
-        if(canMoveLeft(game, i, j)) game.setFieldAccessible(true, i-2, j);
-        if(canMoveDown(game, i, j)) game.setFieldAccessible(true, i, j+2);
+	public void setAvailableMoves(Game game, int x, int y){
+		if(canMoveRigth(game, x, y)) game.setFieldAccessible(true, x+2, y);
+        if(canMoveUp(game, x, y)) game.setFieldAccessible(true, x, y-2);
+        if(canMoveLeft(game, x, y)) game.setFieldAccessible(true, x-2, y);
+        if(canMoveDown(game, x, y)) game.setFieldAccessible(true, x, y+2);
 	}
 	
     @Override
