@@ -15,8 +15,8 @@ public class Controller implements ActionListener {
     private Game game;
     private ViewInterface view;
     private int click = 1;
-    private Pair coordinate;
-    private Pair coordinate2;
+    private int[] coordinate  = new int[2];
+    private int[] coordinate2 = new int[2] ;
     
     public Controller() {
         this.game = new Game();
@@ -25,9 +25,11 @@ public class Controller implements ActionListener {
     }
 
     private void addActionListeners() {
-        for (int i = 0; i < ((View)view).getNumberOfButtons(); i++) {
-            ((View)view).getButton(i).addActionListener(this);
-        }
+    	for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++){
+            ((View)view).getButton(x,y).addActionListener(this);
+			}
+		}
     }
     
     public boolean canMoveRigth(Game game, int i, int j){
@@ -74,54 +76,51 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!game.isGameOver()) {
-            int indexOfViewButton = getJButtonIndex((JButton) e.getSource());
-            Pair coordinates = convertToCoordinates(indexOfViewButton);
-            game.setUserSymbol(coordinates.first, coordinates.second);
+        	
+            int[] indexOfViewButton = getJButtonIndex((JButton) e.getSource());
+           
+            game.setUserSymbol(indexOfViewButton[0], indexOfViewButton[1]);
             
-            if(game.getFieldOwner(coordinates.first, coordinates.second).equals(Symbol.X) && click==1 ){
-            	coordinate = coordinates;
+            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.X) && click==1 ){
+            	coordinate = indexOfViewButton;
             	//Set access true to available moves
-            	setAvailableMoves(game, coordinate.first, coordinate.second);
+            	setAvailableMoves(game, coordinate[0], coordinate[1]);
                	click=2;
             	}
             
-            if(game.getFieldAccessible(coordinates.first, coordinates.second) && click==2 ){
-            	coordinate2=coordinates;
+            if(game.getFieldAccessible(indexOfViewButton[0], indexOfViewButton[1]) && click==2 ){
+            	coordinate2=indexOfViewButton;
             	//Set field clicked
-            	setFieldClicked(game, coordinate.first, coordinate.second, coordinate2.first, coordinate2.second);
+            	setFieldClicked(game, coordinate[0], coordinate[1], coordinate2[0], coordinate2[1]);
                 //Set accessible to false
-            	setFieldFalse(game, coordinate.first, coordinate.second);
+            	setFieldFalse  (game, coordinate[0], coordinate[1]);
             	//Set Symbol to O
-            	setFieldSymbolO(game, coordinate.first, coordinate.second, coordinate2.first, coordinate2.second);
+            	setFieldSymbolO(game, coordinate[0], coordinate[1], coordinate2[0], coordinate2[1]);
             	click=1;
             }
-            if(game.getFieldOwner(coordinates.first, coordinates.second).equals(Symbol.O))
+            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.O))
             	click=1;
-            view.updateBoard(game.getFieldOwner(coordinates.first, coordinates.second), (JButton) e.getSource());
+            view.updateBoard(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]), (JButton) e.getSource());
         }
     }
 
-    private int getJButtonIndex(JButton button) {
+    private int[] getJButtonIndex(JButton button) {
     	
-        int buttonIndex = 0;
-        for (int i = 0; i < 49; i++) {
-            if (button == ((View)view).getButton(i)) {
-                buttonIndex = i;
+        int butIndX = 0;
+        int butIndY = 0;
+        for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++) {
+            if (button == ((View)view).getButton(x,y)) {
+                butIndX = x;
+                butIndY = y;
+                }
             }
         }
-        return buttonIndex;
+        
+        return  new int[] {butIndX,butIndY};
     }
 
-    private Pair convertToCoordinates(int index) {
-        int first = 0, second = 0; 
-        for(int i=0; i<49; i++){
-        	if(index==i){
-        		first=i/7; 
-        		second=i%7;
-        	}
-        }
-        return Pair.create(first, second);
-    }
+    
 
     public void informOutcome() {
         if (game.getDidSomeoneWin()) {

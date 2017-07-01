@@ -14,15 +14,15 @@ import javax.swing.JPanel;
 
 public class View extends JFrame implements ViewInterface {
     private final GridLayout grid;     
-    private final JButton[] buttons;   
+    private final JButton[][] buttons;   
 	private ImageIcon none;
 	
     public View() {
         super("Peg Solitare");
-        grid = new GridLayout(8, 7);
-        buttons = new JButton[49];
+        grid = new GridLayout(7, 7);
+        buttons = new JButton[7][7];
         
-		none = new ImageIcon(this.getClass().getResource("none.png"));
+		none = new ImageIcon(this.getClass().getResource("icons/none.png"));
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addComponentsToPane(getContentPane());
@@ -36,13 +36,24 @@ public class View extends JFrame implements ViewInterface {
         panel.setLayout(grid);        
         panel.setPreferredSize(new Dimension(450, 450));
 
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i] = new JButton();
-            buttons[i].getPreferredSize();
-            panel.add(buttons[i]);
-            buttons[i].setIcon(none);
-            if(i<2 || (i>4&&i<9) || (i>11&&i<14) || (i>34&&i<37) || (i>39&&i<44) || (i>46&&i<49))
-				buttons[i].setEnabled(false);
+        for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++){
+	            buttons[x][y] = new JButton();
+	            buttons[x][y].getPreferredSize();
+	            panel.add(buttons[x][y]);
+	            buttons[x][y].setIcon(none);
+	            if(x<2){
+					if(y<2||y>4){
+						buttons[x][y].setEnabled(false);
+					} 	
+				}
+				if(x>4){
+					if(y<2||y>4){
+						buttons[x][y].setEnabled(false);
+					} 	
+				}	
+	            
+			}	
         }
 
         pane.add(panel);
@@ -64,9 +75,11 @@ public class View extends JFrame implements ViewInterface {
     
     @Override
     public void informWin(Symbol userSymbol) {
-        for (JButton button : buttons) {
+        for(int x=0; x<7 ;x++){
+    	for (JButton button : buttons[x]) {
             button.setEnabled(false);
         }
+    	}
 
         JOptionPane.showMessageDialog(null,"You won!");
     }
@@ -76,8 +89,8 @@ public class View extends JFrame implements ViewInterface {
         JOptionPane.showMessageDialog(null, "Restart");
     }
 
-    public JButton getButton(int index) {
-        return buttons[index];
+    public JButton getButton(int x,int y) {
+        return buttons[x][y];
     }
 
     public int getNumberOfButtons() {

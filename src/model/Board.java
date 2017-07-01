@@ -4,23 +4,33 @@ import model.Field.Symbol;
 
 public class Board {
     private Field[][] gameGrid;
-    private static final int BOARD_SIDE_LENGTH = 7;
+    private static final int BOARDLEN = 7;
     
     public Board() {
-        gameGrid = new Field[BOARD_SIDE_LENGTH][BOARD_SIDE_LENGTH];
+        gameGrid = new Field[BOARDLEN][BOARDLEN];
         
         // initializes the board with Symbol.None
-        for (int i = 0; i < BOARD_SIDE_LENGTH; i++) {
-            for (int j = 0; j < BOARD_SIDE_LENGTH; j++) {
-                gameGrid[i][j] = Field.getDefault();
-                gameGrid[i][j].setAccessible(false);
-                if((i<2 && j<2) || ((i>4 && i<7) && j<2) || ((j>4 && j<7) && i<2) || (i>4 && j>4)){
-                	gameGrid[i][j].setAccessible(false);
-                	gameGrid[i][j].setOwner(Symbol.O);
+        for(int y=0; y<BOARDLEN ;y++){
+			for(int x=0; x<BOARDLEN ; x++) {
+                gameGrid[x][y] = Field.getDefault();
+                gameGrid[x][y].setAccessible(false);
+                if(x<2){
+					if(y<2||y>4){
+						gameGrid[x][y].setAccessible(false);
+	                	gameGrid[x][y].setOwner(Symbol.O);
+					} 	
+				}
+				if(x>4){
+					if(y<2||y>4){
+						gameGrid[x][y].setAccessible(false);
+	                	gameGrid[x][y].setOwner(Symbol.O);
+					} 	
+				}	
+                	
                 }
             }
         }
-    }
+    
     
     public void cruz(){
     	gameGrid[1][3].setOwner(Symbol.X);
@@ -46,9 +56,9 @@ public class Board {
     
     public int evaluateBoard() {
         int score = 0;
-        for (int i = 0; i < BOARD_SIDE_LENGTH; i++){
-        	for (int j = 0; j < BOARD_SIDE_LENGTH; j++){
-        		if(gameGrid[i][j].getOwner()==Symbol.X)
+        for(int y=0; y<BOARDLEN ;y++){
+			for(int x=0; x<BOARDLEN ; x++) {
+        		if(gameGrid[x][y].getOwner()==Symbol.X)
         			score++;
         	}
         }
