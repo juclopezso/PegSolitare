@@ -13,115 +13,137 @@ import javax.swing.JButton;
 
 public class Controller implements ActionListener {
     private Game game;
-    private ViewInterface view;
+    //private ViewInterface view;
+    private View view;
     private int click = 1;
-    private Pair coordinate;
-    private Pair coordinate2;
+    private int[] coordinate  = new int[2];
+    private int[] coordinate2 = new int[2];
     
     public Controller() {
         this.game = new Game();
         this.view = new View();
         addActionListeners();
+        setUp();
+        
+        
     }
-
+    public void setUp(){
+    	for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++) {
+				view.updateBoard(game.getBoard().getFieldOwner(x, y),view.getButton(x, y));
+			}
+		}
+    }
+    
     private void addActionListeners() {
-        for (int i = 0; i < ((View)view).getNumberOfButtons(); i++) {
-            ((View)view).getButton(i).addActionListener(this);
-        }
+    	for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++){
+				view.getButton(x,y).addActionListener(this);
+			}
+		}
     }
     
-    public boolean canMoveRigth(Game game, int i, int j){
-		return(i<5 && game.getFieldOwner(i+1, j).equals(Symbol.X) && game.getFieldOwner(i+2, j).equals(Symbol.O)) ? true : false;
+    public boolean canMoveRigth(Game game, int x, int y){
+		return(x<5 && game.getFieldOwner(x+1, y).equals(Symbol.X) && game.getFieldOwner(x+2, y).equals(Symbol.O)) ? true : false;
 	}
-    public boolean canMoveLeft(Game game, int i, int j){
-		return(i>1 && game.getFieldOwner(i-1, j).equals(Symbol.X) && game.getFieldOwner(i-2, j).equals(Symbol.O)) ? true : false;
+    public boolean canMoveLeft(Game game, int x, int y){
+		return(x>1 && game.getFieldOwner(x-1, y).equals(Symbol.X) && game.getFieldOwner(x-2, y).equals(Symbol.O)) ? true : false;
 	}
-    public boolean canMoveUp(Game game, int i, int j){
-		return(j>1 && game.getFieldOwner(i, j-1).equals(Symbol.X) && game.getFieldOwner(i, j-2).equals(Symbol.O)) ? true : false;
+    public boolean canMoveUp(Game game, int x, int y){
+		return(y>1 && game.getFieldOwner(x, y-1).equals(Symbol.X) && game.getFieldOwner(x, y-2).equals(Symbol.O)) ? true : false;
 	}
-    public boolean canMoveDown(Game game, int i, int j){
-		return(i<5 && game.getFieldOwner(i, j+1).equals(Symbol.X) && game.getFieldOwner(1, j+2).equals(Symbol.O)) ? true : false;
-	}
-    
-	public void setFieldFalse(Game game, int i, int j){
-		if(i<5) game.setFieldAccessible(false, i+2, j);
-    	if(i>1) game.setFieldAccessible(false, i-2, j);
-    	if(j>1) game.setFieldAccessible(false, i, j-2);
-    	if(j<5) game.setFieldAccessible(false, i, j+2);	
+    public boolean canMoveDown(Game game, int x, int y){
+		return(x<5 && game.getFieldOwner(x, y+1).equals(Symbol.X) && game.getFieldOwner(1, y+2).equals(Symbol.O)) ? true : false;
 	}
     
-	public void setFieldSymbolO(Game game, int i1, int j1, int i2, int j2){
-		if(i2 > i1) game.setFieldOwner(Symbol.O, i1+1, j1);
-    	if(i2 < i1) game.setFieldOwner(Symbol.O, i1-1, j1);
-    	if(j2 < j1) game.setFieldOwner(Symbol.O, i1, j1-1);            		              
-    	if(j2 > j1) game.setFieldOwner(Symbol.O, i1, j1+1);
+	public void setFieldFalse(Game game, int x, int y){
+		if(x<5) game.setFieldAccessible(false, x+2, y);
+    	if(x>1) game.setFieldAccessible(false, x-2, y);
+    	if(y>1) game.setFieldAccessible(false, x, y-2);
+    	if(y<5) game.setFieldAccessible(false, x, y+2);	
+	}
+    
+	public void setFieldSymbolO(Game game, int x1, int y1, int x2, int y2){
+		if(x2 > x1) game.setFieldOwner(Symbol.O, x1+1, y1);
+    	if(x2 < x1) game.setFieldOwner(Symbol.O, x1-1, y1);
+    	if(y2 < y1) game.setFieldOwner(Symbol.O, x1, y1-1);            		              
+    	if(y2 > y1) game.setFieldOwner(Symbol.O, x1, y1+1);
 	}
 	
 	
-	public void setFieldClicked(Game game, int i1, int j1, int i2, int j2){
-		game.setFieldAccessible(false, i1, j1);
-    	game.setFieldOwner(Symbol.O, i1, j1);
-    	game.setFieldOwner(Symbol.X, i2, j2);
+	public void setFieldClicked(Game game, int x1, int y1, int x2, int y2){
+		game.setFieldAccessible(false, x1, y1);
+    	game.setFieldOwner(Symbol.O, x1, y1);
+    	game.setFieldOwner(Symbol.X, x2, y2);
 	}
 	
-	public void setAvailableMoves(Game game, int i, int j){
-		if(canMoveRigth(game, i, j)) game.setFieldAccessible(true, i+2, j);
-        if(canMoveUp(game, i, j)) game.setFieldAccessible(true, i, j-2);
-        if(canMoveLeft(game, i, j)) game.setFieldAccessible(true, i-2, j);
-        if(canMoveDown(game, i, j)) game.setFieldAccessible(true, i, j+2);
+	public void setAvailableMoves(Game game, int x, int y){
+		if(canMoveRigth(game, x, y)) game.setFieldAccessible(true, x+2, y);
+        if(canMoveUp(game, x, y)) game.setFieldAccessible(true, x, y-2);
+        if(canMoveLeft(game, x, y)) game.setFieldAccessible(true, x-2, y);
+        if(canMoveDown(game, x, y)) game.setFieldAccessible(true, x, y+2);
+	}
+	
+	public void setBoard(){
+		for(int i=0; i<7; i++){
+			for(int j=0; j<7; j++){
+				game.board = game.boards.get(game.boards.size()-1);
+			}
+		}
 	}
 	
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!game.isGameOver()) {
-            int indexOfViewButton = getJButtonIndex((JButton) e.getSource());
-            Pair coordinates = convertToCoordinates(indexOfViewButton);
-            game.setUserSymbol(coordinates.first, coordinates.second);
+        	        	
+            int[] indexOfViewButton = getJButtonIndex((JButton) e.getSource());
+      
             
-            if(game.getFieldOwner(coordinates.first, coordinates.second).equals(Symbol.X) && click==1 ){
-            	coordinate = coordinates;
+            game.setUserSymbol(indexOfViewButton[0], indexOfViewButton[1]);
+            
+            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.X) && click==1 ){
+            	coordinate = indexOfViewButton;
             	//Set access true to available moves
-            	setAvailableMoves(game, coordinate.first, coordinate.second);
+            	setAvailableMoves(game, coordinate[0], coordinate[1]);
                	click=2;
-            	}
+              	}
             
-            if(game.getFieldAccessible(coordinates.first, coordinates.second) && click==2 ){
-            	coordinate2=coordinates;
+            if(game.getFieldAccessible(indexOfViewButton[0], indexOfViewButton[1]) && click==2 ){
+            	coordinate2=indexOfViewButton;
+            	//Save the board before the move
+            	game.saveBoard(game.getBoard());
             	//Set field clicked
-            	setFieldClicked(game, coordinate.first, coordinate.second, coordinate2.first, coordinate2.second);
+            	setFieldClicked(game, coordinate[0], coordinate[1], coordinate2[0], coordinate2[1]);
                 //Set accessible to false
-            	setFieldFalse(game, coordinate.first, coordinate.second);
+            	setFieldFalse  (game, coordinate[0], coordinate[1]);
             	//Set Symbol to O
-            	setFieldSymbolO(game, coordinate.first, coordinate.second, coordinate2.first, coordinate2.second);
+            	setFieldSymbolO(game, coordinate[0], coordinate[1], coordinate2[0], coordinate2[1]);
             	click=1;
+            	            	
             }
-            if(game.getFieldOwner(coordinates.first, coordinates.second).equals(Symbol.O))
+            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.O))
             	click=1;
-            view.updateBoard(game.getFieldOwner(coordinates.first, coordinates.second), (JButton) e.getSource());
+            view.updateBoard(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]), (JButton) e.getSource());
         }
     }
 
-    private int getJButtonIndex(JButton button) {
+    private int[] getJButtonIndex(JButton button) {
     	
-        int buttonIndex = 0;
-        for (int i = 0; i < 49; i++) {
-            if (button == ((View)view).getButton(i)) {
-                buttonIndex = i;
+        int butIndX = 0;
+        int butIndY = 0;
+        for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++) {
+            if (button == view.getButton(x,y)) {
+                butIndX = x;
+                butIndY = y;
+                }
             }
         }
-        return buttonIndex;
+        
+        return  new int[] {butIndX,butIndY};
     }
 
-    private Pair convertToCoordinates(int index) {
-        int first = 0, second = 0; 
-        for(int i=0; i<49; i++){
-        	if(index==i){
-        		first=i/7; 
-        		second=i%7;
-        	}
-        }
-        return Pair.create(first, second);
-    }
+    
 
     public void informOutcome() {
         if (game.getDidSomeoneWin()) {
@@ -132,6 +154,14 @@ public class Controller implements ActionListener {
     }
 
     public boolean isGameOver() {    	
-        return game.isGameOver();
+        return game.isGameOver();//los prints de los tableros
+    }
+    public View getView(){
+    	
+    	return this.view;
+    }
+    public Game getGame(){
+    	
+    	return this.game;
     }
 }

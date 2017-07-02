@@ -1,12 +1,15 @@
 package model;
 
+import java.util.ArrayList;
+
 import model.Field.Symbol;
 
 //Logica del juego
 public class Game {
-    private Board board;
+    public Board board;
     private Symbol userSymbol;
     private boolean didSomeoneWin; 
+    public ArrayList<Board> boards = new ArrayList<Board>();
     
     public Game() {
         board = new Board();
@@ -15,20 +18,25 @@ public class Game {
         didSomeoneWin = false;
     }
     
+    public ArrayList<Board> saveBoard(Board board){
+    	boards.add(board);
+    	return boards;
+    }
+    
     //Print the field Symbol
     public void printField() {
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                System.out.print(getFieldOwner(i, j) + " ");
+         for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++) {
+                System.out.print(getFieldOwner(x, y) + " ");
             }
             System.out.println();
         }
     }
     
     public void printAccess() {
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                System.out.print(getFieldAccessible(i, j) + " ");
+    	 for(int y=0; y<7 ;y++){
+ 			for(int x=0; x<7 ; x++) {
+ 				System.out.print(getFieldAccessible(x, y) + " ");
             }
             System.out.println();
         }
@@ -69,8 +77,8 @@ public class Game {
         return board.getFieldAccessible(x, y);
     }
     
-    public void setUserSymbol(int i, int j) {
-    	if(getFieldOwner(i, j).equals(Symbol.O))
+    public void setUserSymbol(int x, int y) {
+    	if(getFieldOwner(x, y).equals(Symbol.O))
     		userSymbol = Symbol.X;
         else userSymbol = Symbol.O;
     }
@@ -78,5 +86,7 @@ public class Game {
     public Symbol getUserSymbol() {
         return userSymbol;
     }
-  
+    public Board getBoard(){
+    	return this.board;
+    }
 }

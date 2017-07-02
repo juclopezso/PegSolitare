@@ -1,0 +1,7 @@
+CREATE DATABASE sonar CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+CREATE USER 'sonar' IDENTIFIED BY 'sonar123';
+GRANT ALL ON sonar.* TO 'sonar'@'%' IDENTIFIED BY 'sonar123' ;
+GRANT ALL ON sonar.* TO 'sonar'@'localhost' IDENTIFIED BY 'sonar123';
+FLUSH PRIVILEGES; 
+
+// sonar-scanner -Dproject.settings=sonar-peg.properties

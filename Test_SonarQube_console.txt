@@ -1,1 +1,0 @@
-sonar-scanner -Dproject.settings=sonar-pegsolitare.properties
