@@ -5,6 +5,8 @@ import model.Field.Symbol;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,15 +14,20 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+
+
 public class View extends JFrame implements ViewInterface {
     private final GridLayout grid;     
-    private final JButton[][] buttons;   
+    private final JButton[][] buttons;  
+    private final JButton reStartBut;  
+    
 	private ImageIcon none;
 	
     public View() {
         super("Peg Solitare");
-        grid = new GridLayout(7, 7);
+        grid = new GridLayout(8, 7);
         buttons = new JButton[7][7];
+        reStartBut = new JButton("Reestart");
         
 		none = new ImageIcon(this.getClass().getResource("icons/none.png"));
         
@@ -31,6 +38,18 @@ public class View extends JFrame implements ViewInterface {
 
     }
 
+    public void  setActionButReset(){
+    	reStartBut.addActionListener(
+                new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                	   //
+                   }
+               }      
+           );
+    }
+    
+    
     public void addComponentsToPane(final Container pane) {
         final JPanel panel = new JPanel();
         panel.setLayout(grid);        
@@ -52,7 +71,7 @@ public class View extends JFrame implements ViewInterface {
 						buttons[x][y].setEnabled(false);
 			}	
         }
-
+        panel.add(reStartBut);
         pane.add(panel);
     }
 

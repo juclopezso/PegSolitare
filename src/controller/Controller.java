@@ -30,6 +30,15 @@ public class Controller implements ActionListener {
         
         
     }
+    public void paint(){
+    	for(int y=0; y<7 ;y++){
+			for(int x=0; x<7 ; x++) {
+				view.getButton(x, y).repaint();
+			}
+    	}	
+    	
+    } 
+    
     public void setUp(){
     	for(int y=0; y<7 ;y++){
 			for(int x=0; x<7 ; x++) {
@@ -112,9 +121,10 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!game.isGameOver()) {
-        	
+        	        	
             int[] indexOfViewButton = getJButtonIndex((JButton) e.getSource());
-           
+      
+            
             game.setUserSymbol(indexOfViewButton[0], indexOfViewButton[1]);
         	        	
             int[] indexOfViewButton = getJButtonIndex((JButton) e.getSource());
@@ -148,9 +158,11 @@ public class Controller implements ActionListener {
             	click=1;
             	            	
             }
-            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.O))
+            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.O)){
             	click=1;
-            view.updateBoard(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]), (JButton) e.getSource());
+            }
+            paint();
+            //view.updateBoard(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]), (JButton) e.getSource());
         }
     }
 
