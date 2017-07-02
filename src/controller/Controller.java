@@ -1,6 +1,7 @@
 package controller;
 
 import model.Field.Symbol;
+import model.Board;
 import model.Game;
 import utils.Pair;
 import view.View;
@@ -8,6 +9,7 @@ import view.ViewInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
@@ -18,6 +20,7 @@ public class Controller implements ActionListener {
     private int click = 1;
     private int[] coordinate  = new int[2];
     private int[] coordinate2 = new int[2];
+    private ArrayList<IntPair> moves = new ArrayList<IntPair>();    
     
     public Controller() {
         this.game = new Game();
@@ -92,6 +95,20 @@ public class Controller implements ActionListener {
 		}
 	}
 	
+	public void saveMoves(int x, int y){
+		IntPair pair = new IntPair(x,y);
+		moves.add(pair);
+	}
+	
+	public void printPair(IntPair pair){
+		System.out.println(pair.x + " " + pair.y);
+	}
+	
+	public void printMoves(){
+		for(int i=0; i<moves.size(); i++)
+    		printPair(moves.get(i));
+	}
+	
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!game.isGameOver()) {
@@ -110,6 +127,10 @@ public class Controller implements ActionListener {
             
             if(game.getFieldAccessible(indexOfViewButton[0], indexOfViewButton[1]) && click==2 ){
             	coordinate2=indexOfViewButton;
+            	//Save moves of the move
+            	saveMoves(coordinate[0], coordinate[1]);
+            	saveMoves(coordinate2[0], coordinate2[1]);
+         
             	//Save the board before the move
             	game.saveBoard(game.getBoard());
             	//Set field clicked
