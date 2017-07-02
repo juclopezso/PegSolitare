@@ -1,18 +1,26 @@
 package model;
 
+import java.util.ArrayList;
+
 import model.Field.Symbol;
 
 //Logica del juego
 public class Game {
-    private Board board;
+    public Board board;
     private Symbol userSymbol;
     private boolean didSomeoneWin; 
+    public ArrayList<Board> boards = new ArrayList<Board>();
     
     public Game() {
         board = new Board();
         board.cruz();
         userSymbol = Symbol.NONE;
         didSomeoneWin = false;
+    }
+    
+    public ArrayList<Board> saveBoard(Board board){
+    	boards.add(board);
+    	return boards;
     }
     
     //Print the field Symbol

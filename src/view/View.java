@@ -43,17 +43,13 @@ public class View extends JFrame implements ViewInterface {
 	            buttons[x][y].getPreferredSize();
 	            panel.add(buttons[x][y]);
 	            buttons[x][y].setIcon(none);
-	            if(x<2){
-					if(y<2||y>4){
+	            if(x<2)
+					if(y<2||y>4)
 						buttons[x][y].setEnabled(false);
-					} 	
-				}
-				if(x>4){
-					if(y<2||y>4){
-						buttons[x][y].setEnabled(false);
-					} 	
-				}	
 				
+				if(x>4)
+					if(y<2||y>4)
+						buttons[x][y].setEnabled(false);
 			}	
         }
 
@@ -79,7 +75,7 @@ public class View extends JFrame implements ViewInterface {
         for(int x=0; x<7 ;x++){
     	for (JButton button : buttons[x]) {
             button.setEnabled(false);
-        }
+    		}
     	}
 
         JOptionPane.showMessageDialog(null,"You won!");
