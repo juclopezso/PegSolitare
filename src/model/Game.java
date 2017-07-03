@@ -49,8 +49,8 @@ public class Game {
     //Condition to game´s end
     public boolean isGameOver() {
         int score = board.evaluateBoard();
-        printAccess();
-        printField();
+        //printAccess();
+        //sprintField();
         
         
         if(score == 1){
