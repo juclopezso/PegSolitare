@@ -8,9 +8,13 @@ public class Board {
     
     public Board() {
         gameGrid = new Field[BOARDLEN][BOARDLEN];
+        setUp();
         
         // initializes the board with Symbol.None
-        for(int y=0; y<BOARDLEN ;y++){
+        
+        }
+    public void setUp(){
+    	for(int y=0; y<BOARDLEN ;y++){
 			for(int x=0; x<BOARDLEN ; x++) {
                 gameGrid[x][y] = Field.getDefault();
                 gameGrid[x][y].setAccessible(false);
@@ -29,8 +33,7 @@ public class Board {
                 	
                 }
             }
-        }
-    
+    }
     
     public void cruz(){
     	gameGrid[2][2].setOwner(Symbol.X);
@@ -83,5 +86,6 @@ public class Board {
     public void setFieldAccessible(boolean access, int x, int y) {
         gameGrid[x][y].setAccessible(access);
     }
+    
     
 }

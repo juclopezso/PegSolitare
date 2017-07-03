@@ -25,11 +25,16 @@ public class Controller implements ActionListener {
     public Controller() {
         this.game = new Game();
         this.view = new View();
+        
+        Reset(view.getRestart());
+        
         addActionListeners();
         setUp();
         
         
     }
+    
+    
     public void paint(){
     	for(int y=0; y<7 ;y++){
 			for(int x=0; x<7 ; x++) {
@@ -53,6 +58,27 @@ public class Controller implements ActionListener {
 				view.getButton(x,y).addActionListener(this);
 			}
 		}
+    }
+    public void  Reset(JButton buton){
+    	buton.addActionListener(
+                new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                	   game.getBoard().setUp();
+                	   game.getBoard().cruz();
+                   }
+               }      
+           );
+    }
+    public void  Undo(JButton buton){
+    	buton.addActionListener(
+                new ActionListener() {
+                   @Override
+                   public void actionPerformed(ActionEvent e) {
+                	   //
+                   }
+               }      
+           );
     }
     
     public boolean canMoveRigth(Game game, int x, int y){
@@ -121,19 +147,11 @@ public class Controller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!game.isGameOver()) {
-        	        	
+        	    
             int[] indexOfViewButton = getJButtonIndex((JButton) e.getSource());
-      
-            
-            game.setUserSymbol(indexOfViewButton[0], indexOfViewButton[1]);
-        	        	
-            int[] indexOfViewButton = getJButtonIndex((JButton) e.getSource());
-      
-            
-            if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.X) && click==1 ){
-            	coordinate = indexOfViewButton;
-            game.setUserSymbol(indexOfViewButton[0], indexOfViewButton[1]);
-            
+                game.setUserSymbol(indexOfViewButton[0], indexOfViewButton[1]);
+       
+        
             if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.X) && click==1 ){
             	coordinate = indexOfViewButton;
             	//Set access true to available moves
@@ -161,7 +179,8 @@ public class Controller implements ActionListener {
             if(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]).equals(Symbol.O)){
             	click=1;
             }
-            paint();
+            setUp();
+            //paint();
             //view.updateBoard(game.getFieldOwner(indexOfViewButton[0], indexOfViewButton[1]), (JButton) e.getSource());
         }
     }
@@ -191,7 +210,10 @@ public class Controller implements ActionListener {
             view.informTie();
         }
     }
-
+    
+    public void resetBoard(){
+		game.board = game.boards.get(0);
+	}
     public boolean isGameOver() {    	
         return game.isGameOver();//los prints de los tableros
     }

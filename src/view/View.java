@@ -20,6 +20,7 @@ public class View extends JFrame implements ViewInterface {
     private final GridLayout grid;     
     private final JButton[][] buttons;  
     private final JButton reStartBut;  
+    private final JButton undoBut;  
     
 	private ImageIcon none;
 	
@@ -28,6 +29,8 @@ public class View extends JFrame implements ViewInterface {
         grid = new GridLayout(8, 7);
         buttons = new JButton[7][7];
         reStartBut = new JButton("Reestart");
+        undoBut    = new JButton("Undo");
+        
         
 		none = new ImageIcon(this.getClass().getResource("icons/none.png"));
         
@@ -38,16 +41,6 @@ public class View extends JFrame implements ViewInterface {
 
     }
 
-    public void  setActionButReset(){
-    	reStartBut.addActionListener(
-                new ActionListener() {
-                   @Override
-                   public void actionPerformed(ActionEvent e) {
-                	   //
-                   }
-               }      
-           );
-    }
     
     
     public void addComponentsToPane(final Container pane) {
@@ -71,6 +64,7 @@ public class View extends JFrame implements ViewInterface {
 						buttons[x][y].setEnabled(false);
 			}	
         }
+        panel.add(undoBut);
         panel.add(reStartBut);
         pane.add(panel);
     }
@@ -112,4 +106,14 @@ public class View extends JFrame implements ViewInterface {
     public int getNumberOfButtons() {
         return buttons.length;
     }
+    public JButton getRestart(){
+    	
+    	return reStartBut;
+    }
+    public JButton getUndo(){
+    	
+    	return undoBut;
+    }
+    
+    
 }
